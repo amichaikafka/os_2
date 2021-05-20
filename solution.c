@@ -3,8 +3,8 @@
 #include <pthread.h>
 #include <math.h>
 // #include <semaphore.h>
-
-pthread_t tid[4];
+#define NUM_T  5
+pthread_t tid[NUM_T];
 pthread_mutex_t lock;
 long sum = 0;
 long primeCounter = 0;
@@ -13,16 +13,16 @@ int numOfRandomNumbers;
 int *arr;
 int random1 = 0;
 int index = 0;
-
+int i1=0;
 int randomPivot;
 void *loto(void *arg)
 {
     random1 = rand();
     srand(randomPivot);
-    for (int i = 0; i < numOfRandomNumbers; i++)
+    for ( i1 = 0; i1 < numOfRandomNumbers; i1++)
     {
         random1 = rand();
-        arr[i] = random1;
+        arr[i1] = random1;
     }
 }
 
@@ -48,7 +48,12 @@ void *sum_count_prime(void *arg)
 {
     while (index != numOfRandomNumbers)
     {
-        //  printf("hhh%d\n",index);
+        while (index>i1)
+        {
+            /* code */
+        }
+        
+        //   printf("hhh%d\n",index);
         /* code */
 
         pthread_mutex_lock(&lock);
@@ -92,9 +97,10 @@ int main(int argc, char *argv[])
     //  random = rand();
     // srand(randomPivot);
     pthread_create(&(tid[0]), NULL, &loto, NULL);
+    pthread_create(&(tid[1]), NULL, &loto, NULL);
     //generate random numbers
 
-    for (int i = 1; i < 4; i++)
+    for (int i = 2; i < NUM_T; i++)
     {
         // printf("jhg\n");
         e = pthread_create(&(tid[i]), NULL, &sum_count_prime, NULL);
@@ -109,6 +115,14 @@ int main(int argc, char *argv[])
     pthread_join(tid[1], NULL);
     pthread_join(tid[2], NULL);
     pthread_join(tid[3], NULL);
+    pthread_join(tid[4], NULL);
+    // pthread_join(tid[5], NULL);
+    // pthread_join(tid[6], NULL);
+    // pthread_join(tid[7], NULL);
+    // pthread_join(tid[8], NULL);
+    // pthread_join(tid[9], NULL);
+    // pthread_join(tid[2], NULL);
+    // pthread_join(tid[3], NULL);
     //keep the out format as this!!
     printf("%ld,%ld\n", sum, primeCounter);
     pthread_mutex_destroy(&lock);
