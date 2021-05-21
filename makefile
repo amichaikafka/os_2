@@ -6,7 +6,7 @@ FLAGS=-Wall -g
 all:  task1 task2
 
 task1: solution.c 
-	gcc -o solution solution.c -lpthread -lm
+	gcc -o solution solution.c -lpthread -lm 
 task2: primeSlow.c 
 	gcc -o primeSlow primeSlow.c 
 
@@ -14,4 +14,4 @@ task2: primeSlow.c
 
 
 clean:
-	-rm -f *.o *.so  prime
+	-rm -f *.o *.so  solution primeSlow
