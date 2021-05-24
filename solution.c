@@ -16,6 +16,7 @@ long numOfRandomNumbers;
 
 int randomPivot;
 long Thread_num;
+int y;
 int x;
 
 int isPrime(int num)
@@ -50,6 +51,16 @@ int isPrime(int num)
 
 
 
+void sum_count_prime_rest()
+{
+    int num = 0;
+    for (int i = 0; i < y; i++)
+    {
+        /* code */
+        num = rand();
+        isPrime(num);
+    }
+}
 
 void *sum_count_prime(void *arg)
 {
@@ -61,6 +72,8 @@ void *sum_count_prime(void *arg)
         isPrime(num);
     }
 }
+
+
 
 int main(int argc, char *argv[])
 {
@@ -86,9 +99,14 @@ int main(int argc, char *argv[])
 
     int random1 = rand();
     srand(randomPivot);
+    
+    y = numOfRandomNumbers % (Thread_num * NUM_T);
+    x = numOfRandomNumbers / (Thread_num * NUM_T);  
 
-    x = numOfRandomNumbers / (Thread_num * NUM_T);
-
+    if(y!=0){
+        sum_count_prime_rest();
+    }
+    
     for (int i = 0; i < Thread_num * NUM_T; i++)
     {
 
@@ -99,6 +117,7 @@ int main(int argc, char *argv[])
             printf("erro");
         }
     }
+    
 
     for (int i = 0; i < Thread_num * NUM_T; i++)
     {
